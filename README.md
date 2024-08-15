@@ -77,7 +77,7 @@ pipeline {
         }
         stage ("Git checkout") {
             steps {
-                git branch: 'main', url: 'https://github.com/vijaygiduthuri/starbucks.git'
+                git branch: 'main', url: 'https://github.com/KISHOREKOPPARAPU/starbucks.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -120,8 +120,8 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker') {
-                        sh "docker tag starbucks vijaygiduthuri/starbucks:latest "
-                        sh "docker push vijaygiduthuri/starbucks:latest "
+                        sh "docker tag starbucks kopparapukishore/starbucks:latest "
+                        sh "docker push kopparapukishore/starbucks:latest "
                     }
                 }
             }
@@ -130,16 +130,16 @@ pipeline {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview vijaygiduthuri/starbucks:latest'
-                       sh 'docker-scout cves vijaygiduthuri/starbucks:latest'
-                       sh 'docker-scout recommendations vijaygiduthuri/starbucks:latest'
+                       sh 'docker-scout quickview kopparapukishore/starbucks:latest'
+                       sh 'docker-scout cves kopparapukishore/starbucks:latest'
+                       sh 'docker-scout recommendations kopparapukishore/starbucks:latest'
                    }
                 }
             }
         }
         stage ("Deploy to Conatiner") {
             steps {
-                sh 'docker run -d --name starbucks -p 3000:3000 vijaygiduthuri/starbucks:latest'
+                sh 'docker run -d --name starbucks -p 3000:3000 kopparapukishore/starbucks:latest'
             }
         }
     }
